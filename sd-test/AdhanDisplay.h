@@ -57,21 +57,15 @@ void MySPI_SendData(uint8_t data) {
     digitalWrite(SSPI_CLK, HIGH);
     digitalWrite(SSPI_DO, HIGH);
     for (uint8_t j = 0;j < 8;j++) {
-        // asm("nop; nop; nop; nop; nop; nop; nop; nop;nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop;");
-        // GPIO.out_w1tc = 0x4000000;  // clock pin low
         digitalWrite(SSPI_CLK, LOW);
         if ((mveri & 0x01) == 0) {      // MSB first
-           // GPIO.out_w1tc = 0x2000000;  // Data pin high
             digitalWrite(SSPI_DO, LOW);
         }
         else {
-            // GPIO.out_w1ts = 0x2000000;  // Data pin low
             digitalWrite(SSPI_DO, HIGH);
         }
         digitalWrite(SSPI_CLK, HIGH);
         mveri = mveri >> 1;
-        // asm("nop; nop; nop; nop; nop; nop; nop; nop;nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop;");
-        // GPIO.out_w1ts = 0x4000000;   // clock pin high
     }
     delayMicroseconds(3);
 }
@@ -79,26 +73,18 @@ void MySPI_SendData(uint8_t data) {
 void MySPI_SendByte(uint8_t dat) {
     uint8_t veri;
     veri = dat;
-    //GPIO.out_w1ts = 0x4000000;  // clock pin high
-    //GPIO.out_w1ts = 0x2000000;  // Data pin high
     digitalWrite(SSPI_CLK, HIGH);
     digitalWrite(SSPI_DO, HIGH);
     for (uint8_t j = 0;j < 8;j++) {
-        // asm("nop; nop; nop; nop; nop; nop; nop; nop;nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop;");
-        // GPIO.out_w1tc = 0x4000000;  // clock pin low
         digitalWrite(SSPI_CLK, LOW);
         if ((veri & 0x80) == 0) {      // MSB first
-           // GPIO.out_w1tc = 0x2000000;  // Data pin high
             digitalWrite(SSPI_DO, LOW);
         }
         else {
-            // GPIO.out_w1ts = 0x2000000;  // Data pin low
             digitalWrite(SSPI_DO, HIGH);
         }
         digitalWrite(SSPI_CLK, HIGH);
         veri = veri << 1;
-        // asm("nop; nop; nop; nop; nop; nop; nop; nop;nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop; nop;");
-        // GPIO.out_w1ts = 0x4000000;   // clock pin high
     }
     delayMicroseconds(3);
 }
